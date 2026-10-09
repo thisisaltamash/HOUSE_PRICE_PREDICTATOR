@@ -19,7 +19,16 @@ if not os.path.exists(MODEL_PATH):
     urllib.request.urlretrieve(MODEL_URL, MODEL_PATH)
 
 model = joblib.load(MODEL_PATH)
-features = joblib.load("house_features.joblib")
+features = [
+    "MedInc",
+    "HouseAge",
+    "AveRooms",
+    "AveBedrms",
+    "Population",
+    "AveOccup",
+    "Latitude",
+    "Longitude",
+]
 
 # input schema
 class HouseFeatures(BaseModel):
