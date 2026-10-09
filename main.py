@@ -30,6 +30,20 @@ features = [
     "Longitude",
 ]
 
+app = FastAPI(
+    title="California House Price Prediction API",
+    description="ML-powered REST API for predicting median house prices across California census block groups.",
+    version="1.0.0",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # input schema
 class HouseFeatures(BaseModel):
     MedInc: float = Field(gt=0, description="Median income in block group")
