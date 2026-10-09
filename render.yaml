@@ -5,7 +5,19 @@ services:
     runtime: python
     region: oregon
     plan: free
-    buildCommand: pip install -r requirements.txt
+    buildCommand: |
+      pip install -r requirements.txt &&
+      python -c "
+      import urllib.request, os
+      model = 'house_model.joblib'
+      url = 'https://huggingface.co/thisisaltamash/house_model.joblib/resolve/main/house_model.joblib?download=true'
+      if not os.path.exists(model):
+          print('Downloading model (~138 MB)...')
+          urllib.request.urlretrieve(url, model)
+          print('Model downloaded.')
+      else:
+          print('Model already cached.')
+      "
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHON_VERSION
