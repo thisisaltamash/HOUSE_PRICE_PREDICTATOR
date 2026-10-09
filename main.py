@@ -10,35 +10,16 @@ from pydantic import BaseModel,Field
 import urllib.request
 
 MODEL_PATH = "house_model.joblib"
-MODEL_URL = "https://huggingface.co/thisisaltamash/house_model.joblib/resolve/main/house_model.joblib"
+MODEL_URL = (
+    "https://huggingface.co/thisisaltamash/house_model.joblib/"
+    "resolve/main/house_model.joblib?download=true"
+)
 
 if not os.path.exists(MODEL_PATH):
     urllib.request.urlretrieve(MODEL_URL, MODEL_PATH)
 
 model = joblib.load(MODEL_PATH)
-
-app=FastAPI(title="California House Price Prediction API")
-
-# Explicit local development origins for frontend
-ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "http://localhost:4173",
-    "http://127.0.0.1:4173",
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["*"],
-)
-
-model=joblib.load("house_model.joblib")
-features=joblib.load("house_features.joblib")
+features = joblib.load("house_features.joblib")
 
 # input schema
 class HouseFeatures(BaseModel):
