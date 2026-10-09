@@ -10,7 +10,7 @@ from pydantic import BaseModel,Field
 import urllib.request
 
 MODEL_PATH = "house_model.joblib"
-MODEL_URL = "YOUR_DIRECT_DOWNLOAD_URL_HERE"
+MODEL_URL = "https://huggingface.co/thisisaltamash/house_model.joblib/resolve/main/house_model.joblib"
 
 if not os.path.exists(MODEL_PATH):
     urllib.request.urlretrieve(MODEL_URL, MODEL_PATH)
