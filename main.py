@@ -1,10 +1,21 @@
 import io
+import os
 import joblib
 import pandas as pd
 from fastapi import FastAPI,HTTPException,UploadFile,File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel,Field
+
+import urllib.request
+
+MODEL_PATH = "house_model.joblib"
+MODEL_URL = "YOUR_DIRECT_DOWNLOAD_URL_HERE"
+
+if not os.path.exists(MODEL_PATH):
+    urllib.request.urlretrieve(MODEL_URL, MODEL_PATH)
+
+model = joblib.load(MODEL_PATH)
 
 app=FastAPI(title="California House Price Prediction API")
 
